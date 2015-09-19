@@ -1,0 +1,8 @@
+[package]
+name = "nanny_demo"
+version = "0.0.1"
+authors = ["Dave Herman <dherman@mozilla.com>"]
+license = "MIT"
+
+[dependencies]
+nanny = "0.0.1"
