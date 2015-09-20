@@ -4,9 +4,12 @@ use nanny::*;
 
 use std::ffi::CString;
 
+// Rust implementations of Node functions must be linked without mangled names.
 #[no_mangle]
 pub extern fn make_a_pi(info: &mut FunctionCallbackInfo) {
+    // Allocating JS values requires executing in a Scope.
     Scope::run(|scope| {
+        // Set the current JS function activation's return value to an allocated number.
         info.set_return(scope.number(3.14));
     });
 }
@@ -32,6 +35,8 @@ fn naughty<'a>() -> Local<'a, Integer> {
 }
  */
 
+// The Rust native module must contain a function called `node_main` that takes the
+// module object and can use this to set its exports.
 #[no_mangle]
 pub extern fn node_main(mut module: Local<Object>) {
     module.export(&CString::new("make_a_pi").unwrap(), make_a_pi);
