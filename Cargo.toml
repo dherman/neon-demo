@@ -1,5 +1,5 @@
 [package]
-name = "nanny_demo"
+name = "nanny-demo"
 version = "0.0.1"
 authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
