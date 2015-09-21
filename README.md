@@ -15,7 +15,7 @@ A demo of using [nanny](http://github.com/dherman/nanny) and [rust-bindings](htt
 
 * [multirust](https://github.com/brson/multirust#quick-installation)
 
-(Right now multirust is a mandatory dependency because it's used to run on Rust nightly by default. Once the [fix for a jemalloc linking bug](https://github.com/rust-lang/rust/pull/27400) makes it through the trains to stable, multirust will be an optional dependency and rust-bindings will default to the system Rust compiler.)
+*Right now multirust is a mandatory dependency because it's used to run on Rust nightly by default. Once the [fix for a jemalloc linking bug](https://github.com/rust-lang/rust/pull/27400) makes it through the trains to stable, multirust will be an optional dependency and rust-bindings will default to the system Rust compiler.*
 
 ## Running the Demo
 
