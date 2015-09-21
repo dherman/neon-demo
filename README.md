@@ -1,32 +1,33 @@
 A demo of using [nanny](http://github.com/dherman/nanny) and [rust-bindings](http://github.com/dherman/rust-bindings) to integrate Rust and Node.
 
-## Dependencies
+## Setup
 
-**Note: This is currently only working on OS X.**
+**Note: this is currently only working on OS X.**
 
-Basically you just need Node and Rust.
+### OS X
 
-### Node
+* [XCode](https://developer.apple.com/xcode/download/)
+* Node: io.js v3 or later. I recommend using [nvm](https://github.com/creationix/nvm#install-script):
 
-I strongly recommend using [nvm](https://github.com/creationix/nvm#install-script) for managing Node installations. For this project, io.js version 3 or greater is required:
+```
+% nvm install iojs
+```
+
+* [multirust](https://github.com/brson/multirust#quick-installation)
+
+(Right now multirust is a mandatory dependency because it's used to run on Rust nightly by default. Once the [fix for a jemalloc linking bug](https://github.com/rust-lang/rust/pull/27400) makes it through the trains to stable, multirust will be an optional dependency and rust-bindings will default to the system Rust compiler.)
+
+## Running the Demo
+
+Make sure you are using io.js:
 
 ```
 % nvm use iojs
 ```
 
-### Rust
-
-For this project, [multirust](https://github.com/brson/multirust#quick-installation) is required. The rust-bindings library uses it to automatically select the appropriate version of Rust.
-
-## Usage
-
-**Note: This is currently only working on OS X.**
-
-The point of rust-bindings is to automate the build process, so you don't need any special build steps to use this project. Simply install the npm dependencies as usual and you can run the demo:
+Since [rust-bindings](http://github.com/dherman/rust-bindings) automates the build process, setting up and running this demo is just like any other Node package:
 
 ```
 % npm install
 % node -e 'require("./")'
 ```
-
-Running the demo causes the Rust native module to build and load automatically.
