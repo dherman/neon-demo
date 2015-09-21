@@ -1,11 +1,11 @@
 {
   "name": "nanny-demo",
   "main": "lib/index.js",
-  "description": "Automates the process of building a native Node module in Rust.",
+  "description": "A demo of using nanny and rust-bindings to integrate Rust and Node.",
   "author": "Dave Herman <dherman@mozilla.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/dherman/nanny_demo.git"
+    "url": "http://github.com/dherman/nanny-demo.git"
   },
   "license": "MIT",
   "dependencies": {
