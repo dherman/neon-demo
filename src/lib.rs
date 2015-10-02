@@ -16,7 +16,7 @@ pub extern fn make_a_pi(call: &mut Call) {
 
 #[no_mangle]
 pub extern fn make_an_array(call: &mut Call) {
-    let result = Scope::run(|scope| {
+    Scope::run(|scope| {
         let mut array = scope.array(3);
         array.set(0, scope.integer(17));
         array.set(1, scope.integer(42));

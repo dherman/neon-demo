@@ -9,9 +9,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "rust-bindings": "0.0.4"
+    "rust-bindings": "0.0.5"
   },
   "scripts": {
-    "prepublish": "rust-bindings generate"
+    "postinstall": "rust-bindings build"
   }
 }
