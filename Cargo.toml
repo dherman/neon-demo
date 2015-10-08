@@ -5,4 +5,4 @@ authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
 
 [dependencies]
-nanny = "0.0.2"
+nanny = "0.0.3"
