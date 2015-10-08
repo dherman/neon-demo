@@ -2,7 +2,7 @@ extern crate nanny;
 
 use nanny::vm::Call;
 use nanny::value::Object;
-use nanny::local::Local;
+use nanny::mem::Handle;
 use nanny::scope::Scope;
 
 use std::ffi::CString;
@@ -71,7 +71,7 @@ pub extern fn should_panic(call: &Call) {
 
 /*
 // This produces a lifetime error as expected:
-fn naughty<'a>() -> Local<'a, Integer> {
+fn naughty<'a>() -> Handle<'a, Integer> {
     call.realm().scoped(|scope| {
         scope.integer(17)
     })
@@ -81,7 +81,7 @@ fn naughty<'a>() -> Local<'a, Integer> {
 // The Rust native module must contain a function called `node_main` that takes the
 // module object and can use this to set its exports.
 #[no_mangle]
-pub extern fn node_main(mut module: Local<Object>) {
+pub extern fn node_main(mut module: Handle<Object>) {
     module.export(&CString::new("make_a_pi").unwrap(), make_a_pi);
     module.export(&CString::new("make_an_array").unwrap(), make_an_array);
     module.export(&CString::new("make_a_number").unwrap(), make_a_number);
