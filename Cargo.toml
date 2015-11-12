@@ -5,4 +5,4 @@ authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
 
 [dependencies]
-nanny = "0.0.5"
+nanny = { version = "0.0.6", path = "../nanny" }

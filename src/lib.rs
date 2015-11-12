@@ -1,90 +1,79 @@
 extern crate nanny;
 
-use nanny::vm::Call;
-use nanny::value::{Integer, Number, Array, Object};
-use nanny::mem::Handle;
+use nanny::vm::{Call, JS, Module, Result};
+use nanny::value::{Integer, Number, Array, Tagged};
 use nanny::scope::Scope;
 
-use std::ffi::CString;
-
-// Rust implementations of Node functions must be linked without mangled names.
-#[no_mangle]
-pub extern fn make_a_pi(call: &Call) {
-    // Allocating JS values requires executing in a Scope.
-    call.realm().scoped(|scope| {
-        // Set the current JS function activation's return value to an allocated number.
-        call.activation().set_return(Number::new(scope, 3.14));
-    });
+fn make_a_pi(call: Call) -> JS<Number> {
+    Ok(Number::new(call.scope, 3.14))
 }
 
-#[no_mangle]
-pub extern fn make_an_array(call: &Call) {
-    call.realm().scoped(|scope| {
-        let mut array = Array::new(scope, 3);
-        array.set(0, Integer::new(scope, 17));
-        array.set(1, Integer::new(scope, 42));
-        array.set(2, Integer::new(scope, 1999));
-        call.activation().set_return(array);
-    });
-    //println!(">>> this is Rust speaking: I have a Rust value: {:?}", result);
+fn make_an_array(call: Call) -> JS<Array> {
+    let scope = call.scope;
+    let mut array = Array::new(scope, 3);
+    array.set(0, Integer::new(scope, 17));
+    array.set(1, Integer::new(scope, 42));
+    array.set(2, Integer::new(scope, 1999));
+    //println!(">>> this is Rust speaking: I have a Rust value: {:?}", array);
+    Ok(array)
 }
 
-#[no_mangle]
-pub extern fn make_a_number(call: &Call) {
-    call.realm().scoped(|scope| {
-        let x = Integer::new(scope, 1999);
-        let y = scope.nested(|_| {
-            17
-        });
-        println!("y = {}", y);
-        call.activation().set_return(x);
+fn make_a_number(call: Call) -> JS<Integer> {
+    let x = Integer::new(call.scope, 1999);
+    let y = call.scope.nested(|_| {
+        17
     });
+    println!("y = {}", y);
+    Ok(x)
 }
 
-#[no_mangle]
-pub extern fn escape_example(call: &Call) {
-    call.realm().scoped(|scope| {
-        let mut x = None;
-        scope.chained(|scope| {
-            let mut array = Array::new(scope, 2);
-            array.set(0, Integer::new(scope, 42));
-            array.set(1, Number::new(scope, 6.28));
-            x = Some(scope.escape(array));
-        });
-        call.activation().set_return(x.unwrap());
+fn escape_example(call: Call) -> JS<Array> {
+    let mut x = None;
+    call.scope.chained(|scope| {
+        let mut array = Array::new(scope, 2);
+        array.set(0, Integer::new(scope, 42));
+        array.set(1, Number::new(scope, 6.28));
+        x = Some(scope.escape(array));
     });
+    Ok(x.unwrap())
 }
 
-#[no_mangle]
-pub extern fn should_panic(call: &Call) {
-    call.realm().scoped(|outer| {
-        let mut x = Integer::new(outer, 0);
-        let y = outer.nested(|_| {
-            // panic: outer scope is inactive!
-            x = Integer::new(outer, 1999);
-            17
-        });
-        println!("y = {}", y);
-        call.activation().set_return(x);
-    });
+fn string_internal_size(call: Call) -> JS<Integer> {
+    let s = try!(try!(call.arguments.require(call.scope, 0)).to_string(call.scope));
+    let size = s.size();
+    let result = Integer::new(call.scope, size as i32);
+    Ok(result)
 }
 
 /*
-// This produces a lifetime error as expected:
-fn naughty<'a>() -> Handle<'a, Integer> {
-    call.realm().scoped(|scope| {
-        Integer::new(scope, 17)
-    })
-}
- */
+use nanny::value::Undefined;
 
-// The Rust native module must contain a function called `node_main` that takes the
-// module object and can use this to set its exports.
+fn static_error_shadow(call: Call) -> JS<Integer> {
+    let outer = call.scope;
+    let mut x = Integer::new(outer, 0);
+    let y = outer.nested(|_| {
+        // error: outer is inactive!
+        x = Integer::new(outer, 1999);
+        17
+    });
+    println!("y = {}", y);
+    Ok(x)
+}
+
+fn static_error_escape(call: Call) -> JS<Undefined> {
+    let _ = call.scope.nested(|scope| {
+        Integer::new(scope, 17)
+    });
+    Ok(Undefined::new(call.scope))
+}
+*/
+
 #[no_mangle]
-pub extern fn node_main(mut module: Handle<Object>) {
-    module.export(&CString::new("make_a_pi").unwrap(), make_a_pi);
-    module.export(&CString::new("make_an_array").unwrap(), make_an_array);
-    module.export(&CString::new("make_a_number").unwrap(), make_a_number);
-    module.export(&CString::new("escape_example").unwrap(), escape_example);
-    module.export(&CString::new("should_panic").unwrap(), should_panic);
+pub fn node_main(mut module: Module) -> Result<()> {
+    try!(module.export("make_a_pi", make_a_pi));
+    try!(module.export("make_an_array", make_an_array));
+    try!(module.export("make_a_number", make_a_number));
+    try!(module.export("escape_example", escape_example));
+    try!(module.export("string_internal_size", string_internal_size));
+    Ok(())
 }
