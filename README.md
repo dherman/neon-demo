@@ -7,10 +7,10 @@ A demo of using [nanny](http://github.com/dherman/nanny) and [rust-bindings](htt
 ### OS X
 
 * [XCode](https://developer.apple.com/xcode/download/)
-* Node: io.js v3 or later. I recommend using [nvm](https://github.com/creationix/nvm#install-script):
+* Node: Node 4 or later. I recommend using [nvm](https://github.com/creationix/nvm#install-script):
 
 ```
-% nvm install iojs
+% nvm install 4
 ```
 
 * [multirust](https://github.com/brson/multirust#quick-installation)
@@ -19,10 +19,10 @@ A demo of using [nanny](http://github.com/dherman/nanny) and [rust-bindings](htt
 
 ## Running the Demo
 
-Make sure you are using io.js:
+Make sure you are using the right Node version:
 
 ```
-% nvm use iojs
+% nvm use 4
 ```
 
 Since [rust-bindings](http://github.com/dherman/rust-bindings) automates the build process, setting up and running this demo is just like any other Node package:
