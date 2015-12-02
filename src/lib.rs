@@ -1,7 +1,7 @@
 extern crate nanny;
 
 use nanny::vm::{Call, JS, Module, Result};
-use nanny::value::{Integer, Number, Array, Tagged};
+use nanny::value::{Integer, Number, Array, Any, Object};
 use nanny::scope::Scope;
 
 fn make_a_pi(call: Call) -> JS<Number> {
@@ -11,9 +11,9 @@ fn make_a_pi(call: Call) -> JS<Number> {
 fn make_an_array(call: Call) -> JS<Array> {
     let scope = call.scope;
     let mut array = Array::new(scope, 3);
-    array.set(0, Integer::new(scope, 17));
-    array.set(1, Integer::new(scope, 42));
-    array.set(2, Integer::new(scope, 1999));
+    try!(array.set(0, Integer::new(scope, 17)));
+    try!(array.set(1, Integer::new(scope, 42)));
+    try!(array.set(2, Integer::new(scope, 1999)));
     //println!(">>> this is Rust speaking: I have a Rust value: {:?}", array);
     Ok(array)
 }
@@ -29,12 +29,13 @@ fn make_a_number(call: Call) -> JS<Integer> {
 
 fn escape_example(call: Call) -> JS<Array> {
     let mut x = None;
-    call.scope.chained(|scope| {
+    try!(call.scope.chained(|scope| {
         let mut array = Array::new(scope, 2);
-        array.set(0, Integer::new(scope, 42));
-        array.set(1, Number::new(scope, 6.28));
+        try!(array.set(0, Integer::new(scope, 42)));
+        try!(array.set(1, Number::new(scope, 6.28)));
         x = Some(scope.escape(array));
-    });
+        Ok(())
+    }));
     Ok(x.unwrap())
 }
 
