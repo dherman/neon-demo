@@ -1,8 +1,8 @@
-extern crate nanny;
+extern crate neon;
 
-use nanny::vm::{Call, JS, Module, Result};
-use nanny::value::{Integer, Number, Array, Any, Object};
-use nanny::scope::Scope;
+use neon::vm::{Call, JS, Module, Result};
+use neon::value::{Integer, Number, Array, Any, Object};
+use neon::scope::Scope;
 
 fn make_a_pi(call: Call) -> JS<Number> {
     Ok(Number::new(call.scope, 3.14))
@@ -10,7 +10,7 @@ fn make_a_pi(call: Call) -> JS<Number> {
 
 fn make_an_array(call: Call) -> JS<Array> {
     let scope = call.scope;
-    let mut array = Array::new(scope, 3);
+    let array = Array::new(scope, 3);
     try!(array.set(0, Integer::new(scope, 17)));
     try!(array.set(1, Integer::new(scope, 42)));
     try!(array.set(2, Integer::new(scope, 1999)));
@@ -30,7 +30,7 @@ fn make_a_number(call: Call) -> JS<Integer> {
 fn escape_example(call: Call) -> JS<Array> {
     let mut x = None;
     try!(call.scope.chained(|scope| {
-        let mut array = Array::new(scope, 2);
+        let array = Array::new(scope, 2);
         try!(array.set(0, Integer::new(scope, 42)));
         try!(array.set(1, Number::new(scope, 6.28)));
         x = Some(scope.escape(array));
@@ -47,7 +47,7 @@ fn string_internal_size(call: Call) -> JS<Integer> {
 }
 
 /*
-use nanny::value::Undefined;
+use neon::value::Undefined;
 
 fn static_error_shadow(call: Call) -> JS<Integer> {
     let outer = call.scope;

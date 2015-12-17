@@ -1,8 +1,8 @@
 [package]
-name = "nanny-demo"
+name = "neon-demo"
 version = "0.0.3"
 authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
 
 [dependencies]
-nanny = { version = "0.0.9", path = "../nanny" }
+neon = { version = "0.0.10", path = "../neon" }

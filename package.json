@@ -1,15 +1,15 @@
 {
-  "name": "nanny-demo",
+  "name": "neon-demo",
   "main": "lib/index.js",
-  "description": "A demo of using nanny and rust-bindings to integrate Rust and Node.",
+  "description": "A demo of using Neon and rust-bindings to integrate Rust and Node.",
   "author": "Dave Herman <dherman@mozilla.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/dherman/nanny-demo.git"
+    "url": "http://github.com/dherman/neon-demo.git"
   },
   "license": "MIT",
   "dependencies": {
-    "rust-bindings": "0.0.7"
+    "rust-bindings": "0.0.9"
   },
   "scripts": {
     "postinstall": "rust-bindings build"

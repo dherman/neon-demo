@@ -1,4 +1,4 @@
-A demo of using [nanny](http://github.com/dherman/nanny) and [rust-bindings](http://github.com/dherman/rust-bindings) to integrate Rust and Node.
+A demo of using [Neon](http://github.com/dherman/neon) and [rust-bindings](http://github.com/dherman/rust-bindings) to integrate Rust and Node.
 
 ## Setup
 
@@ -12,10 +12,6 @@ A demo of using [nanny](http://github.com/dherman/nanny) and [rust-bindings](htt
 ```
 % nvm install 4
 ```
-
-* [multirust](https://github.com/brson/multirust#quick-installation)
-
-*Right now multirust is a mandatory dependency because it's used to run on Rust nightly by default. Once [a few patches land in Rust stable](https://github.com/dherman/rust-bindings/issues/2), rust-bindings will default to the system Rust compiler and multirust will become an optional dependency.*
 
 ## Running the Demo
 
