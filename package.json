@@ -1,7 +1,7 @@
 {
   "name": "neon-demo",
   "main": "lib/index.js",
-  "description": "A demo of using Neon and rust-bindings to integrate Rust and Node.",
+  "description": "A demo of using Neon to integrate Rust and Node.",
   "author": "Dave Herman <dherman@mozilla.com>",
   "repository": {
     "type": "git",
@@ -9,9 +9,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "rust-bindings": "0.0.9"
+    "neon-bridge": "0.0.10"
   },
   "scripts": {
-    "postinstall": "rust-bindings build"
+    "postinstall": "neon-bridge build"
   }
 }

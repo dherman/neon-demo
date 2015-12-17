@@ -1,4 +1,4 @@
-A demo of using [Neon](http://github.com/dherman/neon) and [rust-bindings](http://github.com/dherman/rust-bindings) to integrate Rust and Node.
+A demo of using [Neon](http://github.com/dherman/neon) to integrate Rust and Node.
 
 ## Setup
 
